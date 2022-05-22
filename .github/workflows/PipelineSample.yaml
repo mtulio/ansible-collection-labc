@@ -1,8 +1,8 @@
 ---
-name: Collection test and deploy
+name: Collection test, build and deploy
 on: [push, pull_request]
 jobs:
-  setup:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,31 +17,19 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements.txt
 
-  lint-test:
-    runs-on: ubuntu-latest
-    needs: [setup]
-    steps:
-      - uses: actions/checkout@v2
-        #with:
-        #  path: molecule_demo
       - name: Test with molecule
         run: |
           molecule test
 
-  unit-test:
-    runs-on: ubuntu-latest
-    needs: [lint-test]
-    steps:
-      - uses: actions/checkout@v2
       - name: Run unit tests
         env:
           VERBOSE: true
         run: |
-          echo "init-1"
+          echo "TODO"
 
   build:
     runs-on: ubuntu-latest
-    needs: [lint-test, unit-test]
+    needs: [test]
     steps:
       - uses: actions/checkout@v2
       - name: Checkout
