@@ -3,6 +3,9 @@
   hosts: all
   connection: local
   tasks:
-    - name: "Include mtulio.lab role"
-      include_role:
-        name: "lab"
+    - name: Simple task
+      debug:
+        msg: "Dummy task"
+    # - name: "Include mtulio.lab role"
+    #  include_role:
+    #    name: "lab"
