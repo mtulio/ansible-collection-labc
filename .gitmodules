@@ -1,0 +1,3 @@
+[submodule "roles/lab"]
+	path = roles/lab
+	url = git@github.com:mtulio/ansible-role-lab.git

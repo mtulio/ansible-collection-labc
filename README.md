@@ -1,2 +1,3 @@
-# ansible-collection-labc
-Lab Ansible Collection - don't use it =)
+# Ansible Collection - mtulio.labc
+
+Documentation for the collection.
