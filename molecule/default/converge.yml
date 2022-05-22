@@ -3,6 +3,6 @@
   hosts: all
   connection: local
   tasks:
-    - name: "Include mtulio.lab"
+    - name: "Include mtulio.lab role"
       include_role:
-        name: "mtulio.lab"
+        name: "lab"
