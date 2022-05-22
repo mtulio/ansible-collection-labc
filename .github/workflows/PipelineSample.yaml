@@ -45,8 +45,12 @@ jobs:
           echo 'x' > test.txt;
       - name: Save images to tar
         run: |
-          ansible-galaxy collection build
-          mv mtulio-labc-*.tar.gz build/mtulio-labc.tar.gz
+          mkdir build/
+          ansible-galaxy collection build --output-path build/
+          pwd
+          ls build/
+          build_file=$(ls build/mtulio-labc-*.tar.gz)
+          mv ${build_file} build/mtulio-labc.tar.gz
       - name: Save artifacts
         uses: actions/upload-artifact@v2
         with:
