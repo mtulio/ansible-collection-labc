@@ -59,6 +59,6 @@
 
     - name: Publish the collection.
       command: >
-        ansible-galaxy collection publish ./mtulio-labc-{{ tag }}.tar.gz
+        ansible-galaxy collection publish {{ build_dir }}/mtulio-labc-{{ tag }}.tar.gz
         chdir=../
       tags: deploy
