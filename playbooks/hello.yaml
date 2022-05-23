@@ -1,0 +1,7 @@
+- name: Hello Playbook from Collections
+  connection: local
+  hosts: localhost
+  tasks:
+    - name: Hello msg
+      debug:
+        msg: "Hello world from Collectionss"
