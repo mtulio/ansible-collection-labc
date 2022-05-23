@@ -37,17 +37,17 @@ jobs:
           fetch-depth: 5
           submodules: recursive
 
-      - name: Get the version from head
+      - name: Get version
         id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/heads\//}
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/*/}
 
       - name: Build Collection
         env:
           RELEASE_VERSION: ${{ steps.get_version.outputs.VERSION }}
         run: |
-          echo VERSION=[$RELEASE_VERSION]
+          echo RELEASE_VERSION=[$RELEASE_VERSION]
           ansible-playbook scripts/deploy.yml \
-            -e tag="${{ steps.get_version.outputs.VERSION }}" \
+            -e tag="$RELEASE_VERSION" \
             -t build
           ls build/mtulio-labc-*.tar.gz
 
@@ -64,7 +64,7 @@ jobs:
       - name: Save artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: mtulio-labc-${{ steps.get_version.outputs.VERSION }}
+          name: mtulio-labc-${{ steps.get_version.outputs.VERSION }}.tar.gz
           path: |
             build
 
@@ -99,9 +99,9 @@ jobs:
       #  run: |
       #    ansible-galaxy collection publish ./mtulio-labc.tar.gz --token ${{ secrets.GALAXY_TOKEN }}
 
-      - name: Get the version from tag
+      - name: Get version
         id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/*/}
 
       #- name: Download binaries and prebuilt images
       #  uses: actions/download-artifact@v2
@@ -114,5 +114,12 @@ jobs:
         run: |
           echo VERSION=[$RELEASE_VERSION]
           ansible-playbook scripts/deploy.yml \
-            -e tag="${{ steps.get_version.outputs.VERSION }}" \
+            -e tag="${RELEASE_VERSION}" \
             -t build,deploy
+
+      - name: Save artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: mtulio-labc-${{ steps.get_version.outputs.VERSION }}.tar.gz
+          path: |
+            build
