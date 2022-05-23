@@ -117,6 +117,7 @@ jobs:
       - name: Deploy to Galaxy
         env:
           RELEASE_VERSION: ${{ steps.get_version.outputs.VERSION }}
+          ANSIBLE_GALAXY_TOKEN: ${{ secrets.ANSIBLE_GALAXY_TOKEN }}
         run: |
           echo VERSION=[$RELEASE_VERSION]
           ansible-playbook scripts/deploy.yml \
